@@ -22,6 +22,7 @@ module.exports = function (app, usersRepository){
     });
   });
 
+
   app.get('/users/login', function(req, res){
     res.render("users/login.twig");
   });

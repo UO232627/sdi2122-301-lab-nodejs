@@ -41,6 +41,7 @@ function normalizePort(val) {
     return val;
   }
 
+
   if (port >= 0) {
     // port number
     return port;

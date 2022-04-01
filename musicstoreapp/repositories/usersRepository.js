@@ -20,6 +20,7 @@ module.exports = {
         }
     },
 
+
     findUser: async function(filter, options){
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));

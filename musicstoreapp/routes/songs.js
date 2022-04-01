@@ -18,6 +18,7 @@ module.exports = function(app, songsRepository){
             songs: songs
         }
 
+
         res.render("shop.twig", response);
     });
 

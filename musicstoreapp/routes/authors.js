@@ -1,5 +1,4 @@
 module.exports = function(app){
-
     app.get('/authors/add', function (req, res) {
         let roles = [{
             "rol": "Cantante"

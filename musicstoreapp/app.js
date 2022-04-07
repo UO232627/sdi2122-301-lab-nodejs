@@ -17,7 +17,6 @@ app.use(expressSession({
   saveUninitialized: true
 }));
 
-
 let fileUpload = require('express-fileupload');
 app.use(fileUpload({
   limits: {fileSize: 50 * 1024 * 1024},
@@ -38,11 +37,13 @@ app.set('connectionStrings', url);
 
 const userSessionRouter = require('./routes/userSessionRouter');
 const userAudiosRouter = require('./routes/userAudiosRouter');
+const userCommentRouter = require('./routes/userCommentRouter');
 
 app.use("/songs/add", userSessionRouter);
 app.use("/publications", userSessionRouter);
 app.use("/audios/", userAudiosRouter);
 app.use("/shop/", userSessionRouter);
+app.use("/addComment/", userCommentRouter);
 
 const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);
@@ -51,8 +52,12 @@ require("./routes/users.js")(app, usersRepository);
 let songsRepository = require("./repositories/songsRepository.js");
 songsRepository.init(app, MongoClient);
 
-require("./routes/songs.js")(app, songsRepository);
+let commentsRepository = require("./repositories/commentsRepository");
+commentsRepository.init(app, MongoClient);
+
+require("./routes/songs.js")(app, songsRepository, commentsRepository);
 require("./routes/authors.js")(app);
+require("./routes/comments.js")(app, commentsRepository);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

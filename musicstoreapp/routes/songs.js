@@ -42,6 +42,16 @@ module.exports = function(app, songsRepository){
         });
     });
 
+    app.get('/songs/edit/:id', function (req, res){
+        let filter = {_id: ObjectId(req.params.id)};
+
+        songsRepository.findSong(filter, {}).then(song => {
+            res.render("songs/edit.twig", {song: song});
+        }).catch(error => {
+            res.send("Se ha producido un error al recuperar la cancion " + error)
+        });
+    });
+
     app.get('/songs/:kind/:id', function(req, res){
         let response = 'id: ' + req.params.id + '<br>' + 'Tipo de música: ' + req.params.kind;
 
@@ -120,16 +130,6 @@ module.exports = function(app, songsRepository){
             res.render("publications.twig", {songs: songs});
         }).catch(error => {
             res.send("Se ha producido un error al listar las publicaciones del usuario:" + error)
-        });
-    });
-
-    app.get('/songs/edit/:id', function (req, res){
-        let filter = {_id: ObjectId(req.params.id)};
-
-        songsRepository.findSong(filter, {}).then(song => {
-            res.render("songs/edit.twig", {song: song});
-        }).catch(error => {
-            res.send("Se ha producido un error al recuperar la cancion " + error)
         });
     });
 

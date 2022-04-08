@@ -72,6 +72,33 @@ module.exports = function(app, songsRepository, commentsRepository){
         });
     });
 
+    app.post('/songs/edit/:id', function(req, res) {
+        let song = {
+            title: req.body.title,
+            kind: req.body.kind,
+            price: req.body.price,
+            author: req.session.user
+        }
+
+        let songId = req.params.id;
+        let filter = {_id: ObjectId(songId)};
+
+        const options = {upsert: false}
+
+        songsRepository.updateSong(song, filter, options).then(result => {
+            step1UpdateCover(req.files, songId, function (result){
+                if (result == null){
+                    res.send("Error al actualizar la portada o el audio de la canción");
+                }
+                else{
+                    res.redirect("/publications");
+                }
+            });
+        }).catch(error => {
+            res.send("Se ha producido un error al modificar la cancion " + error);
+        })
+    });
+
     app.get('/songs/:kind/:id', function(req, res){
         let response = 'id: ' + req.params.id + '<br>' + 'Tipo de música: ' + req.params.kind;
 
@@ -105,7 +132,7 @@ module.exports = function(app, songsRepository, commentsRepository){
                                         res.send("Error al subir el audio");
                                     }
                                     else{
-                                        res.send("Agregada la canción ID: " + songId);
+                                        res.redirect("/publications");
                                     }
                                 })
                             }
@@ -151,33 +178,6 @@ module.exports = function(app, songsRepository, commentsRepository){
         }).catch(error => {
             res.send("Se ha producido un error al listar las publicaciones del usuario:" + error)
         });
-    });
-
-    app.post('/songs/edit/:id', function(req, res) {
-        let song = {
-            title: req.body.title,
-            kind: req.body.kind,
-            price: req.body.price,
-            author: req.body.user
-        }
-
-        let songId = req.params.id;
-        let filter = {_id: ObjectId(songId)};
-
-        const options = {upsert: false}
-
-        songsRepository.updateSong(song, filter, options).then(result => {
-            step1UpdateCover(req.files, songId, function (result){
-                if (result == null){
-                    res.send("Error al actualizar la portada o el audio de la canción");
-                }
-                else{
-                    res.send("Se ha modificado el registro correctamente");
-                }
-            });
-        }).catch(error => {
-            res.send("Se ha producido un error al modificar la cancion " + error);
-        })
     });
 
     function step1UpdateCover(files, songId, callback) {

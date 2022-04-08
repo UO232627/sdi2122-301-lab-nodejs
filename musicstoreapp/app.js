@@ -47,6 +47,8 @@ app.use("/shop/", userSessionRouter);
 app.use("/addComment/", userCommentRouter);
 app.use("/songs/edit", userAuthorRouter);
 app.use("/songs/delete", userAuthorRouter);
+app.use("/songs/buy", userSessionRouter);
+app.use("/purchases", userSessionRouter);
 
 const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);

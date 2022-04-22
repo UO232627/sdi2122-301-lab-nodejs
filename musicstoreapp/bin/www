@@ -1,6 +1,16 @@
 #!/usr/bin/env node
 
 /**
+ * Orden
+ *
+ * 1. let de librerias externas
+ * 2. Por cada entidad, hacer un bloque donde:
+ *    2.1. Definir los repositorios
+ *    2.2. Definir los router
+ *    2.3. Definir los servicios (use)
+ */
+
+/**
  * Module dependencies.
  */
 

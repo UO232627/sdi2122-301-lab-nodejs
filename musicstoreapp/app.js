@@ -1,3 +1,12 @@
+/**
+ * Orden
+ *
+ * 1. let de librerias externas
+ * 2. Inclusion de routers y asignacion a controladores
+ * 3. Repositorios
+ * 4. Require de controladores
+ */
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -63,6 +72,7 @@ commentsRepository.init(app, MongoClient);
 require("./routes/songs.js")(app, songsRepository, commentsRepository);
 require("./routes/authors.js")(app);
 require("./routes/comments.js")(app, commentsRepository);
+require("./routes/api/songsAPIv1.0.js")(app, songsRepository);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

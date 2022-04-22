@@ -40,6 +40,9 @@ let bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
+let jwt = require('jsonwebtoken');
+app.set('jwt', jwt);
+
 const { MongoClient } = require("mongodb");
 const url = 'mongodb+srv://admin:ADMSIS123$@tiendamusica.ajpli.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 app.set('connectionStrings', url);
@@ -72,7 +75,7 @@ commentsRepository.init(app, MongoClient);
 require("./routes/songs.js")(app, songsRepository, commentsRepository);
 require("./routes/authors.js")(app);
 require("./routes/comments.js")(app, commentsRepository);
-require("./routes/api/songsAPIv1.0.js")(app, songsRepository);
+require("./routes/api/songsAPIv1.0.js")(app, songsRepository, usersRepository);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

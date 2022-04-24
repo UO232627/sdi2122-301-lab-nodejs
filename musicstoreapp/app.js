@@ -51,6 +51,7 @@ const userSessionRouter = require('./routes/userSessionRouter');
 const userAudiosRouter = require('./routes/userAudiosRouter');
 const userCommentRouter = require('./routes/userCommentRouter');
 const userAuthorRouter = require('./routes/userAuthorRouter');
+const userTokenRouter = require('./routes/userTokenRouter');
 
 app.use("/songs/add", userSessionRouter);
 app.use("/publications", userSessionRouter);
@@ -61,6 +62,7 @@ app.use("/songs/edit", userAuthorRouter);
 app.use("/songs/delete", userAuthorRouter);
 app.use("/songs/buy", userSessionRouter);
 app.use("/purchases", userSessionRouter);
+app.use("/api/v1.0/songs/", userTokenRouter);
 
 const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);

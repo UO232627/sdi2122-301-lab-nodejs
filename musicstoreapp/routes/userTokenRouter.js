@@ -23,7 +23,7 @@ userTokenRouter.use(function (req, res, next){
     }
     else{
         res.status(403); //Forbidden
-        res.json({ authorized: false, error: "No hay token" })
+        res.json({ authorized: false, error: "No hay token" });
     }
 });
 

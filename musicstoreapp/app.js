@@ -27,6 +27,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+let rest = require('request');
+app.set('rest', rest);
+
 let expressSession = require('express-session');
 app.use(expressSession({
   secret: 'abcdeefg',
